@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Review</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #0ea5e9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Navigation Styles */
+        .nav-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--primary);
+            background-color: #eff6ff;
+        }
+
+        .nav-btn.active {
+            color: white;
+            background-color: var(--primary);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Tab Content Panes */
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form & Input Styles */
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-color);
+        }
+
+        .btn-clear {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-clear:hover {
+            background-color: #fecaca;
+        }
+
+        textarea {
+            width: 100%;
+            height: 350px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            resize: vertical;
+            background-color: #fafafa;
+            color: var(--text-color);
+            line-height: 1.5;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: #fff;
+        }
+
+        /* Prompt Display Box */
+        .prompt-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-height: 450px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(1rem); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>First Review</h1>
+            <p>Editorial Diagnostic & Analysis System</p>
+        </header>
+
+        <!-- INPUT FIELDS SECTION -->
+        <div class="card">
+            <div class="section-title">Input Fields</div>
+            
+            <!-- Navigation for Input Fields (Rule 4: use names, not numbers) -->
+            <div class="nav-container" id="inputNav">
+                <button class="nav-btn active" onclick="switchTab('input', 'dumbDocTab', this)">DUMB DOC</button>
+            </div>
+
+            <!-- Input Field #1 -->
+            <div id="dumbDocTab" class="tab-pane active">
+                <div class="input-header">
+                    <label for="dumbDocInput">DUMB DOC</label>
+                    <button class="btn-clear" onclick="clearInput('dumbDocInput')">Clear Input</button>
+                </div>
+                <textarea id="dumbDocInput" placeholder="[Dumb Doc]"></textarea>
+            </div>
+        </div>
+
+        <!-- PROMPTS SECTION -->
+        <div class="card">
+            <div class="section-title">Prompts</div>
+
+            <!-- Navigation for Prompts (Rule 4: use names, not numbers) -->
+            <div class="nav-container" id="promptNav">
+                <button class="nav-btn active" onclick="switchTab('prompt', 'firstReviewPromptTab', this)">First Review</button>
+            </div>
+
+            <!-- Prompt: First Review -->
+            <div id="firstReviewPromptTab" class="tab-pane active">
+                <div class="input-header">
+                    <label>Prompt (Name it -> First Review)</label>
+                </div>
+                <div class="prompt-box" id="prompt1Text">INPUT
+
+Dumb Doc:
+[Dumb Doc]
+
+অডিয়েন্স
+
+এই অডিয়েন্স মূলত self-centric দৃষ্টিভঙ্গিতে অভ্যস্ত। তারা সাধারণত নিজের লাভ, প্রয়োজন, নিরাপত্তা, সুবিধা ও সাফল্যকে কেন্দ্র করে বিষয়গুলোকে বিচার করে। পারস্পরিক সহযোগিতার চেয়ে competition-কে প্রয়োজনীয় ও স্বাভাবিক বলে মনে করার প্রবণতা তাদের মধ্যে রয়েছে।
+
+তারা জীবনের প্রয়োজনগুলোকে ক্রমাগত বাড়ানো এবং সেই বাড়তে থাকা প্রয়োজন পূরণের জন্য আরও বেশি অর্জন, আয়, সুবিধা ও সাফল্যের পিছনে ছুটে চলাকে যুক্তিসঙ্গত ও প্রয়োজনীয় বলে মনে করে।
+
+তারা সাধারণত surface-level truth, গভীর insight, underlying mechanism, গভীর analysis এবং গভীর thought-এর দিকে স্বতঃস্ফূর্তভাবে যেতে চায় না। পরিচিত ব্যাখ্যা ও প্রচলিত চিন্তার কাঠামোর মধ্যেই বিষয়গুলোকে বুঝে নেওয়া তাদের কাছে বেশি স্বাভাবিক।
+
+কনটেন্টের উদ্দেশ্য
+
+এই অডিয়েন্সের মধ্যে ধীরে ধীরে deep analysis এবং deep thought-এর অভ্যাস তৈরি করা।
+
+তাদের বর্তমান বিশ্বাস, প্রয়োজন ও চিন্তার জগতকে সরাসরি আক্রমণ না করে, সেই পরিচিত জগতের ভিতর থেকেই তাদের এমনভাবে চিন্তার গভীরে নিয়ে যেতে হবে যাতে তারা নিজেরাই surface-level explanation-এর সীমাবদ্ধতা দেখতে শুরু করে এবং deeper analysis-এর প্রয়োজন অনুভব করে।
+
+কনটেন্টের উদ্দেশ্য অর্জনের পদ্ধতি
+
+১. Title
+
+Title এমন ভাষা, বিষয়, প্রশ্ন, প্রয়োজন, আকাঙ্ক্ষা বা সমস্যা ব্যবহার করবে যার সঙ্গে অডিয়েন্স স্বাভাবিকভাবে relate করে এবং যা তাদের বর্তমান প্রয়োজন ও বিশ্বাসের কাঠামোর সঙ্গে সামঞ্জস্যপূর্ণ।
+
+Title-এ সরাসরি “deep thinking”, “deep analysis”, “truth”, “philosophy” বা অনুরূপ abstract ধারণাকে কেন্দ্রীয় hook হিসেবে ব্যবহার করা যাবে না, যদি না সেটি অডিয়েন্সের কাছে স্বাভাবিকভাবে আকর্ষণীয় হয়।
+
+২. Body
+
+Body-র শুরুতে deep thought, deep thesis বা abstract philosophical discussion দিয়ে প্রবেশ করা যাবে না।
+
+প্রথমে অডিয়েন্সের পরিচিত জীবন, অভ্যাস, প্রয়োজন, বিশ্বাস বা দৈনন্দিন অভিজ্ঞতার কোনও একটি বিষয়কে story, ঘটনা, পরিস্থিতি বা relatable observation-এর মাধ্যমে উপস্থাপন করতে হবে।
+
+তারপর সেই পরিচিত বিষয়টিকে ধীরে ধীরে analyse করতে হবে এবং দেখাতে হবে:
+
+ক) প্রচলিতভাবে বিষয়টিকে যেভাবে দেখা হয়, সেখানে কী কী সীমাবদ্ধতা রয়েছে
+
+খ) কোথায় assumption, ভুল বোঝাবুঝি, অসম্পূর্ণতা বা logical gap রয়েছে
+
+গ) বিষয়টির পিছনে আরও কী deeper mechanism বা relationship কাজ করছে
+
+ঘ) একই বিষয়কে অন্য দৃষ্টিকোণ থেকে দেখলে কী নতুনভাবে বোঝা যায়
+
+শেষে alternative way of thinking, alternative interpretation বা alternative course of action দেখাতে হবে।
+
+অর্থাৎ content-এর চিন্তার progression হবে:
+
+পরিচিত বিষয় → পরিচিত বিশ্বাস → প্রশ্ন/অস্বস্তি → বিশ্লেষণ → প্রচলিত ধারণার সীমাবদ্ধতা → deeper insight → alternative perspective → নতুনভাবে দেখার অভ্যাস
+
+৩. Analogy
+
+Analogy এমন বিষয় থেকে নিতে হবে যা অডিয়েন্সের দৈনন্দিন জীবনের সঙ্গে সরাসরি সম্পর্কিত এবং তাদের চোখে অনায়াসে পড়ে।
+
+বিশেষভাবে ব্যবহার করতে হবে:
+
+ক) তাদের নিজেদের জীবনে নিয়মিত ঘটে এমন ঘটনা
+
+খ) তাদের আশেপাশে নিয়মিত ঘটে এমন ঘটনা
+
+গ) তাদের পরিচিত সামাজিক, পারিবারিক, কর্মক্ষেত্র বা দৈনন্দিন পরিস্থিতি
+
+ঘ) এমন সাধারণ ঘটনা যেগুলো তারা সাধারণত অন্যভাবে analyse করার কথা ভাবে না
+
+Analogy-র উদ্দেশ্য হবে কোনও abstract বা গভীর ধারণাকে প্রথমেই abstract ভাষায় ব্যাখ্যা না করে, একটি পরিচিত ও সহজে দেখা যায় এমন ঘটনার মাধ্যমে সেই ধারণাটিকে উপলব্ধিযোগ্য করে তোলা।
+
+মূল নীতি
+
+অডিয়েন্সকে তাদের বর্তমান চিন্তার জগত থেকে বাইরে ঠেলে দেওয়া যাবে না। বরং তাদের বর্তমান প্রয়োজন, বিশ্বাস ও অভিজ্ঞতাকে entry point হিসেবে ব্যবহার করে ধাপে ধাপে তাদের চিন্তার গভীরে নিয়ে যেতে হবে।
+
+কনটেন্টের গভীরতা অডিয়েন্সের সামনে ঘোষণা করা হবে না; কনটেন্টের চিন্তার progression-এর মধ্য দিয়েই সেই গভীরতা তৈরি হবে।
+
+TASK
+
+উপরের Dumb Doc, Audience, কনটেন্টের উদ্দেশ্য, ও কনটেন্টের উদ্দেশ্য অর্জনের পদ্ধতি-এর ভিত্তিতে নীচের প্রশ্নগুলির উত্তর identify করুন।
+
+প্রশ্নাবলী -
+
+আমি কী বলতে চাই?
+ → কেন বলতে চাই?
+ → এটা বোঝার জন্য আগে কী জানা দরকার? (এটা বোঝার জন্য আগে কি জানা দরকার যেটা পাঠক জানে না? পাঠক কেন তা জানে না?)
+ → তারপর কী বোঝা দরকার?
+ → কোথায় নতুন ধারণা দরকার? (কোন কোন রুল তাকে অ্যাকসেপ্ট করতে হবে? সেগুলো যে রুল, হাইপোথিসিস নয় এবং কেন সেটা রুল তা তাকে বুঝতে হবে।)
+ → কোন যুক্তি কোথায় দাঁড়াচ্ছে?
+ → কোন জায়গায় কতটা explanation দরকার?
+ → কোথায় একটি complete thought শেষ হচ্ছে?
+ → তারপর কোন thought naturally আসছে?
+ → এটা বোঝাবো কি দিয়ে? কি করে?</div>
+                <div class="action-bar">
+                    <button class="btn-primary" onclick="copyPromptAndInput('prompt1Text')">Copy Prompt + Inputs</button>
+                    <button class="btn-primary" onclick="copyText('prompt1Text')">Copy Prompt Only</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard successfully!</div>
+
+    <footer>
+        Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.
+    </footer>
+
+    <script>
+        function switchTab(group, tabId, buttonElement) {
+            const container = group === 'input' ? document.getElementById('inputNav') : document.getElementById('promptNav');
+            const parentCard = container.closest('.card');
+            
+            container.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+
+            parentCard.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function clearInput(inputId) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.value = '';
+                showToast('Input cleared successfully!');
+            }
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Prompt copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function copyPromptAndInput(elementId) {
+            const promptText = document.getElementById(elementId).innerText;
+            const dumbDoc = document.getElementById('dumbDocInput').value;
+
+            let finalContent = promptText;
+            
+            if (finalContent.includes('[Dumb Doc]')) {
+                finalContent = finalContent.replace('[Dumb Doc]', dumbDoc || '[No Dumb Doc provided]');
+            } else {
+                finalContent += "\n\nDumb Doc:\n" + (dumbDoc || '[No Dumb Doc provided]');
+            }
+
+            navigator.clipboard.writeText(finalContent).then(() => {
+                showToast('Prompt with inputs copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
