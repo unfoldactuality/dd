@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #0ea5e9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Prompt Display Box */
+        .prompt-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-height: 550px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(1rem); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Infographic</h1>
+            <p>Editorial Infographic Generation System</p>
+        </header>
+
+        <!-- PROMPT SECTION -->
+        <div class="card">
+            <div class="section-title">Prompt</div>
+
+            <div class="prompt-box" id="promptText">এই prompt-এর ঠিক আগে দেওয়া সম্পূর্ণ content-কে ভিত্তি করে একটি বিস্তারিত, publication-ready infographic তৈরি করুন।
+
+মূল কাজ
+
+প্রথমে দেওয়া content-টি বিশ্লেষণ করে তার সম্পূর্ণ structural architecture শনাক্ত করুন।
+
+তারপর সেই architecture-কে একটি বিস্তারিত visual infographic-এ রূপান্তর করুন।
+
+Infographic-এ অবশ্যই দেখাবেন:
+
+1. মোট প্রধান Section-এর সংখ্যা।
+
+2. প্রতিটি Section-এর:
+   - Section Number
+   - Section Title
+   - Section Subtitle
+   - মোট Subsection সংখ্যা
+
+3. প্রতিটি Section-এর অধীনে থাকা সব Subsection।
+
+4. প্রতিটি Subsection-এর:
+   - Subsection Number
+   - Subsection Title
+   - কী Delivery করা হয়েছে
+   - কেন সেই Delivery সেখানে প্রয়োজন হয়েছে
+
+5. প্রতিটি Section-এর overall function:
+   - এই Section কী establish করছে
+   - পাঠককে কী বোঝাচ্ছে
+   - পরবর্তী Section-এর জন্য কেন এটি প্রয়োজন
+
+6. পুরো content-এর logical progression।
+
+STRUCTURAL ANALYSIS RULES
+
+Content-এ যদি formal Section বা Subsection heading না-ও থাকে, তবুও content-এর logical thought-unit শনাক্ত করে conceptual Section ও Subsection তৈরি করুন।
+
+একটি paragraph-কে শুধু আলাদা paragraph হওয়ার কারণে আলাদা Subsection বানাবেন না।
+
+একটি Subsection তখনই তৈরি করবেন যখন সেখানে একটি স্বতন্ত্র:
+- thought-unit
+- concept
+- argument
+- question
+- explanation
+- example-এর substantive function
+- অথবা delivery function
+
+রয়েছে।
+
+একই thought-unit-এর একাধিক paragraph থাকলে সেগুলিকে অপ্রয়োজনীয়ভাবে আলাদা Subsection করবেন না।
+
+Decorative heading, transition sentence, rhetorical repetition বা একই conclusion-এর পুনরাবৃত্তিকে আলাদা Subsection হিসেবে গণনা করবেন না।
+
+Section ও Subsection-এর সংখ্যা content-এর প্রকৃত conceptual structure থেকে নির্ধারণ করুন।
+
+CONTENT FIDELITY
+
+দেওয়া content-এর কোনও গুরুত্বপূর্ণ Section, Subsection, argument, concept বা conceptual relationship বাদ দেবেন না।
+
+Content-এর substantive meaning পরিবর্তন করবেন না।
+
+Content-এর logical sequence অকারণে পরিবর্তন করবেন না।
+
+কোনও নতুন intellectual direction, argument, claim বা interpretation যোগ করবেন না।
+
+Infographic-এর জন্য ভাষা সংক্ষিপ্ত করতে হলে অর্থ, scope এবং logical function অক্ষুণ্ণ রেখে সংক্ষেপ করুন।
+
+VISUAL LAYOUT-এর সুবিধার জন্য content-এর structural hierarchy পরিবর্তন করবেন না।
+
+মূল নীতি:
+
+Structure must serve the content, not content serve the structure.
+
+SUBTITLE GENERATION RULES
+
+প্রতিটি Section-এর জন্য Subtitle দিতে হবে।
+
+যদি source content-এ স্বাভাবিক বা explicit Subtitle থাকে, সেটিই যথাযথভাবে ব্যবহার করুন।
+
+যদি source content-এ explicit Subtitle না থাকে, তাহলে content-এর অভ্যন্তরীণ meaning, purpose এবং function-এর ভিত্তিতে একটি সংক্ষিপ্ত descriptive Subtitle তৈরি করুন।
+
+Subtitle-এর কাজ হবে Section-টি কী নিয়ে বা কী deliver করছে তা স্পষ্ট করা।
+
+Subtitle কখনও নতুন substantive information যোগ করবে না।
+
+Subtitle-এ এমন কোনও claim, conclusion, interpretation বা intellectual idea যোগ করবেন না যা source content-এ নেই।
+
+Subtitle হবে:
+- সংক্ষিপ্ত
+- descriptive
+- content-grounded
+- structurally informative
+
+Subtitle হবে না:
+- promotional
+- sensational
+- motivational
+- opinionated
+- নতুন thesis
+- source content-এর বাইরে কোনও interpretation
+
+যদি একটি Section-এর একাধিক সম্ভাব্য Subtitle হয়, source content-এর মূল function-কে সবচেয়ে সরাসরি প্রকাশ করে এমনটি নির্বাচন করুন।
+
+DELIVERY FIELD RULE
+
+“কী Delivery করা হয়েছে” অংশে শুধু সেই Subsection-এ source content-এর মাধ্যমে কী deliver করা হয়েছে তা সংক্ষেপে লিখুন।
+
+এখানে editorial opinion যোগ করবেন না।
+
+এখানে “এটি গুরুত্বপূর্ণ”, “এটি খুব শক্তিশালী”, “এটি পাঠককে সাহায্য করবে” ইত্যাদি মূল্যায়নমূলক ভাষা ব্যবহার করবেন না, যদি না source content নিজেই এমন কথা বলে।
+
+Delivery field-এর কাজ:
+
+WHAT IS DELIVERED?
+
+WHY FIELD — STRICT EDITORIAL INFERENCE RULE
+
+“কেন সেই Delivery সেখানে প্রয়োজন হয়েছে” অংশটি source content-এর সরাসরি বক্তব্য হিসেবে উপস্থাপন করবেন না।
+
+এই অংশটি হবে একটি editorial inference।
+
+অর্থাৎ, content-এর:
+- logical sequence
+- conceptual dependency
+- argument progression
+- reader understanding
+- cause-and-effect relationship
+- preceding ও following thought
+
+বিশ্লেষণ করে নির্ধারণ করুন কেন ওই Delivery ওই নির্দিষ্ট অবস্থানে থাকা দরকার হয়েছে।
+
+Why field-এ লিখবেন:
+
+- ওই Delivery আগের ধারণার উপর কীভাবে নির্ভর করছে
+- পরের ধারণার জন্য কী foundation তৈরি করছে
+- কোন conceptual gap পূরণ করছে
+- reader-কে কোন পরবর্তী thought-এর জন্য প্রস্তুত করছে
+- argument-এর কোন link তৈরি করছে
+
+কিন্তু Why field-এ source content-এর বাইরে কোনও নতুন substantive claim তৈরি করবেন না।
+
+Why field-এর কাজ:
+
+WHY IS THIS DELIVERY NEEDED HERE?
+
+Editorial inference-কে factual statement হিসেবে উপস্থাপন করবেন না।
+
+যেখানে inference তুলনামূলকভাবে interpretive, সেখানে ভাষা হবে সতর্ক ও structural, যেমন:
+- “এটি পরের ধারণাটির ভিত্তি তৈরি করে”
+- “এটি আগের প্রশ্নটির উত্তরকে পরের স্তরে নিয়ে যায়”
+- “এটি পরবর্তী ধারণাটি বোঝার জন্য প্রয়োজনীয় context তৈরি করে”
+- “এটি argument-এর এই দুই স্তরের মধ্যে একটি bridge তৈরি করে”
+
+কখনও source content-এর authorial intention সম্পর্কে অপ্রমাণিত দাবি করবেন না, যেমন:
+- “লেখক ইচ্ছা করেই...”
+- “লেখক এখানে পাঠককে বাধ্য করতে চেয়েছেন...”
+
+যদি এমন intention source content-এ স্পষ্টভাবে প্রকাশিত না থাকে।
+
+INFORMATION PRIORITY RULE
+
+Infographic তৈরি করার সময় priority order কঠোরভাবে অনুসরণ করুন:
+
+1. COMPLETENESS
+2. READABILITY
+3. COMPACTNESS
+
+অর্থাৎ:
+
+প্রথম priority:
+সব গুরুত্বপূর্ণ Section, Subsection, Delivery এবং Why information অন্তর্ভুক্ত করা।
+
+দ্বিতীয় priority:
+সেগুলি পরিষ্কার ও সহজে পড়া যায় এমনভাবে উপস্থাপন করা।
+
+তৃতীয় priority:
+সম্ভব হলে infographic-এর দৈর্ঘ্য ও visual density কম রাখা।
+
+Compactness-এর জন্য কখনও completeness sacrifice করবেন না।
+
+Readability বজায় রাখার জন্য তথ্য বাদ দেবেন না।
+
+যদি content বেশি হয়, canvas-এর vertical length বাড়ান।
+
+প্রয়োজনে infographic-কে আরও দীর্ঘ করুন।
+
+প্রয়োজনীয় information বাদ দিয়ে ছোট infographic তৈরি করবেন না।
+
+অতিরিক্ত information-এর কারণে compactness কমে গেলে সেটি গ্রহণযোগ্য।
+
+অতিরিক্ত information-এর কারণে canvas দীর্ঘ হলে সেটিও গ্রহণযোগ্য।
+
+কিন্তু গুরুত্বপূর্ণ content বাদ পড়া গ্রহণযোগ্য নয়।
+
+VISUAL INFORMATION ARCHITECTURE
+
+Infographic-এর information architecture হবে একটি structured editorial map-এর মতো।
+
+উপরে থাকবে:
+
+- একটি prominent main title
+- content-এর central subject বা মূল প্রশ্ন
+- মোট Section সংখ্যা
+- মোট Subsection সংখ্যা
+
+তার নিচে সমস্ত Section ধারাবাহিকভাবে সাজানো থাকবে।
+
+প্রতিটি Section একটি আলাদা সুস্পষ্ট panel/card হিসেবে থাকবে।
+
+প্রতিটি Section panel-এর মধ্যে থাকবে:
+
+SECTION NUMBER
+SECTION TITLE
+SECTION SUBTITLE
+SUBSECTION COUNT
+
+তার নিচে তার সব Subsection থাকবে।
+
+প্রতিটি Subsection-এর information structure হবে:
+
+SUBSECTION NUMBER
+SUBSECTION TITLE
+
+কী Delivery করা হয়েছে:
+[সংক্ষিপ্ত content-grounded explanation]
+
+কেন এখানে প্রয়োজন:
+[সংক্ষিপ্ত editorial inference]
+
+Section এবং Subsection-এর hierarchy প্রথম দেখাতেই বোঝা যেতে হবে।
+
+DELIVERY এবং WHY-এর visual treatment আলাদা রাখুন যাতে পাঠক সহজেই বুঝতে পারেন:
+
+“এখানে কী বলা হয়েছে?”
+
+এবং
+
+“এখানে কেন বলা হয়েছে?”
+
+SECTION FUNCTION
+
+প্রতিটি Section-এর শেষে বা Section header-এর সঙ্গে এমন একটি compact indication রাখতে পারেন যা বোঝায়:
+
+এই Section-এর structural role কী।
+
+এটিও source content-এর logical architecture থেকে নির্ধারণ করবেন।
+
+এখানেও নতুন substantive idea যোগ করবেন না।
+
+LOGICAL FLOW
+
+Section-গুলিকে এমনভাবে সাজান যাতে পুরো content-এর progression চোখে পড়ে।
+
+প্রয়োজনে Section-এর মধ্যে এবং Section থেকে Section-এ subtle directional flow ব্যবহার করুন।
+
+শেষে একটি compact summary area রাখুন যেখানে পুরো content-এর logical progression দেখানো হবে।
+
+যেমন:
+
+মূল প্রশ্ন
+→ সমস্যা
+→ বিশ্লেষণ
+→ নতুন ধারণা
+→ ধারণাগুলির সম্পর্ক
+→ গভীরতর ব্যাখ্যা
+→ ফলাফল
+→ উপসংহার
+
+এটি শুধু একটি structural example।
+
+Actual flow অবশ্যই source content থেকে নির্ধারণ করবেন।
+
+রঙ
+
+সম্পূর্ণ infographic শুধুমাত্র:
+- সাদা
+- কালো
+- ধূসর-এর বিভিন্ন shade
+
+ব্যবহার করে তৈরি করুন।
+
+অন্য কোনও রং ব্যবহার করবেন না।
+
+কোনও gradient ব্যবহার করবেন না।
+
+VISUAL STYLE
+
+Style হবে:
+
+- minimalist
+- sophisticated
+- editorial
+- structured
+- information-dense কিন্তু readable
+- professional
+- publication-ready
+
+Design-এর মূল বৈশিষ্ট্য:
+
+- পরিষ্কার grid
+- সুস্পষ্ট panel/card
+- consistent alignment
+- strong typography hierarchy
+- clear numbering
+- balanced spacing
+- পর্যাপ্ত white space
+- পরিষ্কার visual separation
+- restrained geometric elements
+
+Typography
+
+বাংলা typography অত্যন্ত পরিষ্কার ও পাঠযোগ্য হতে হবে।
+
+Title সবচেয়ে prominent হবে।
+
+Section Title দ্বিতীয় hierarchy-তে থাকবে।
+
+Section Subtitle তার নিচে থাকবে।
+
+Subsection Title স্পষ্ট থাকবে।
+
+Delivery এবং Why-এর লেখা তুলনামূলক ছোট হতে পারে, কিন্তু readable থাকতে হবে।
+
+অতিরিক্ত ছোট font ব্যবহার করবেন না।
+
+প্রয়োজনে font ছোট করার পরিবর্তে canvas-এর আকার বাড়ান।
+
+FINAL OUTPUT RULE
+
+একটি single, long vertical infographic তৈরি করুন।
+
+প্রয়োজন হলে infographic-এর canvas যতটা দরকার ততটা লম্বা করুন।
+
+Information গাদাগাদি করে compact করার চেষ্টা করবেন না।
+
+প্রথমে completeness নিশ্চিত করুন।
+
+তারপর readability নিশ্চিত করুন।
+
+তারপর compactness বিবেচনা করুন।
+
+এই priority কখনও উল্টাবেন না।
+
+চূড়ান্ত infographic দেখে একজন পাঠক যেন এক নজরে বুঝতে পারেন:
+
+- content-এ মোট কতগুলি Section আছে
+- প্রতিটি Section-এ কতগুলি Subsection আছে
+- প্রতিটি Section কী নিয়ে
+- প্রতিটি Subsection কী deliver করছে
+- কেন সেই Delivery ওই অবস্থানে প্রয়োজন
+- এবং একটি Section কীভাবে পরবর্তী Section-এর দিকে নিয়ে যাচ্ছে
+
+শেষে একটি prominent concluding banner রাখুন যেখানে source content-এর central idea বা overall structural conclusion সংক্ষেপে প্রকাশিত হবে।
+
+সেই concluding statement-ও source content-এর ভিত্তিতে তৈরি হবে এবং কোনও নতুন substantive claim যোগ করবে না।</div>
+            <div class="action-bar">
+                <button class="btn-primary" onclick="copyText('promptText')">Copy Prompt Only</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard successfully!</div>
+
+    <footer>
+        Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.
+    </footer>
+
+    <script>
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Prompt copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
