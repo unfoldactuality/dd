@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Review Follow-up</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #0ea5e9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Prompt Display Box */
+        .prompt-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-height: 550px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(1rem); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>First Review Follow-up</h1>
+            <p>Editorial Analysis & Structural Mapping System</p>
+        </header>
+
+        <!-- PROMPT SECTION -->
+        <div class="card">
+            <div class="section-title">Prompt# (Name it -> Report)</div>
+
+            <div class="prompt-box" id="promptText">আপনার দেওয়া Dumb Doc, Audience, Content Objective এবং Content Objective অর্জনের Methodology সম্পূর্ণভাবে বিশ্লেষণ করুন।
+
+আপনার কাজ শুধু content-এর summary বা বিচ্ছিন্ন প্রশ্নের উত্তর দেওয়া নয়।
+
+আপনাকে content-এর ভিতরে থাকা substantive ideas, thoughts, concepts, relationships, arguments, hierarchy, sequence এবং reader journey-কে এমনভাবে unfold করতে হবে যাতে বোঝা যায়:
+
+Content কী বলতে চাইছে
+→ কেন বলতে চাইছে
+→ পাঠক কোথা থেকে শুরু করছে
+→ কী কী আগে বুঝতে হবে
+→ কোন ধারণা কোন ধারণার ওপর দাঁড়াচ্ছে
+→ কোন ধারণার সঙ্গে কোন ধারণার কী relationship
+→ কোথায় নতুন concept দরকার
+→ কোন concept কীভাবে introduce করতে হবে
+→ কোন claim কীভাবে প্রতিষ্ঠিত হচ্ছে
+→ কোথায় logical bridge দরকার
+→ কোথায় thought সম্পূর্ণ হচ্ছে
+→ পরের thought কেন naturally আসছে
+→ কোন জায়গায় কতটা explanation দরকার
+→ কীভাবে বোঝানো হবে
+→ এবং শেষ পর্যন্ত পুরো content কীভাবে একটি coherent reader journey ও structural form গ্রহণ করতে পারে।
+
+মূল নীতি:
+
+Structure is in service of the content, not content in service of the structure.
+
+Content-এর substantive authorial thought, intended meaning, unconventional idea বা conceptual relationship নিজের মতো করে পরিবর্তন, dilute, conventionalize বা বাদ দেবেন না।
+
+প্রথমে content-কে বুঝুন এবং map করুন। তারপর তার structure identify করুন। নিজের পক্ষ থেকে নতুন intellectual agenda তৈরি করবেন না।
+
+1. CONTENT INVENTORY
+
+প্রথমে Dumb Doc-এর raw intellectual material inventory তৈরি করুন।
+
+Content-এর মধ্যে থাকা relevant elements identify করুন:
+
+* central claim
+* supporting claim
+* observation
+* question
+* assumption
+* definition
+* explanation
+* example
+* analogy
+* argument
+* inference
+* principle
+* hypothesis
+* proposition
+* implication
+* conclusion
+* rhetorical statement
+
+প্রতিটি element-এর substantive meaning অক্ষুণ্ণ রাখুন।
+
+যে বিষয়টি content-এ নেই, শুধুমাত্র structure পূরণ করার জন্য তা invent করবেন না।
+
+2. CORE THESIS
+
+Content-এর আসল central thesis identify করুন।
+
+এক বা দুইটি পরিষ্কার বাক্যে লিখুন:
+
+* লেখক শেষ পর্যন্ত কী বলতে চাইছেন
+* এই বক্তব্যের deepest implication কী
+
+তারপর central thesis-কে support করা প্রধান supporting theses বা intermediate claims identify করুন।
+
+Format:
+
+Central Thesis
+→ Supporting Thesis 1
+→ Supporting Thesis 2
+→ Supporting Thesis 3
+→ Final Implication
+
+যদি apparent topic এবং actual thesis আলাদা হয়, সেটি স্পষ্ট করুন।
+
+3. WHY THIS CONTENT EXISTS
+
+দুটি স্তরে উদ্দেশ্য identify করুন।
+
+Authorial Purpose:
+লেখক আসলে কী বোঝাতে বা প্রতিষ্ঠা করতে চাইছেন?
+
+Reader-facing Purpose:
+পাঠকের চিন্তা, perception, understanding বা behaviour-এ কী পরিবর্তন আনতে চাইছেন?
+
+তারপর দেখান:
+
+Current Reader State
+→ Intended Shift
+→ Desired Reader State
+
+4. READER'S STARTING POINT
+
+Audience-এর existing mental model identify করুন।
+
+দেখান:
+
+* পাঠক কী জানে
+* কী বিশ্বাস করে
+* সাধারণত কীভাবে বিষয়টিকে দেখে
+* কী চায়
+* কোন problem-কে problem হিসেবে দেখে
+* কোন বিষয়টি সাধারণত প্রশ্ন করে না
+* কী জানে না
+* কেন জানে না
+* কোন assumption তার চিন্তাকে পরিচালনা করছে
+
+এরপর identify করুন:
+
+Existing Mental Model
+→ Its Limitation
+→ Entry Point for New Thinking
+
+5. PRIOR KNOWLEDGE
+
+Central thesis বোঝার জন্য পাঠকের আগে কী কী জানা বা বোঝা প্রয়োজন তা identify করুন।
+
+প্রতিটি ক্ষেত্রে দেখান:
+
+What must be understood
+→ Why it must come first
+→ What later thought depends on it
+
+যে prior knowledge পাঠকের নেই, তার ক্ষেত্রে দেখান কেন সেটি তার কাছে unfamiliar।
+
+6. CONCEPT HIERARCHY
+
+Content-এর concept-গুলোর hierarchy identify করুন।
+
+দেখান:
+
+Core Concept
+→ Main Concepts
+→ Sub-concepts
+→ Supporting Concepts
+
+প্রতিটি concept-এর status identify করুন:
+
+* foundational
+* primary
+* derived
+* explanatory
+* supporting
+* consequential
+
+বিশেষভাবে দেখুন কোন concept কোনটির ওপর logically dependent।
+
+7. CONCEPT RELATIONSHIP MAP
+
+Concept-গুলোর মধ্যে relationship identify করুন।
+
+প্রয়োজনে relationship হিসেবে ব্যবহার করুন:
+
+* cause → effect
+* condition → outcome
+* premise → conclusion
+* mechanism → result
+* part → whole
+* dependency
+* sequence
+* contrast
+* feedback
+* conflict
+* alignment
+* correction
+* transformation
+
+প্রতিটি গুরুত্বপূর্ণ relationship-এর direction এবং meaning স্পষ্ট করুন।
+
+Hierarchy এবং relationship-কে এক জিনিস হিসেবে treat করবেন না।
+
+8. CONCEPTUAL PROGRESSION
+
+Content-এর major thoughts এবং concepts-কে natural sequence-এ সাজান।
+
+প্রতিটি thought-এর জন্য দেখান:
+
+* Thought কী
+* কোথা থেকে আসছে
+* কেন এখন আসছে
+* কোন previous thought-এর ওপর দাঁড়াচ্ছে
+* কোন next thought-এর foundation তৈরি করছে
+
+প্রয়োজনে progression হতে পারে:
+
+পরিচিত বিষয়
+→ পরিচিত বিশ্বাস
+→ relatable experience
+→ প্রশ্ন
+→ contradiction / discomfort
+→ analysis
+→ limitation
+→ deeper mechanism
+→ new concept
+→ new relationship
+→ implication
+→ alternative perspective
+→ core insight
+→ conclusion
+
+Content-এর প্রকৃত logic ভিন্ন হলে সেটিই অনুসরণ করুন।
+
+9. NEW CONCEPTS
+
+যেখানে reader-এর existing knowledge যথেষ্ট নয় এবং নতুন ধারণা introduce করতে হবে তা identify করুন।
+
+প্রতিটি concept-এর জন্য দেখান:
+
+* Concept কী
+* কেন দরকার
+* reader আগে কীভাবে বিষয়টিকে দেখছিল
+* নতুন concept কী পরিবর্তন করছে
+* concept introduce করার আগে কী জানা প্রয়োজন
+* concept introduce করার পরে কোন thought naturally আসবে
+
+Concept-টি খুব তাড়াতাড়ি বা খুব দেরিতে introduce হলে কী সমস্যা হবে সেটিও দেখান।
+
+10. TERMINOLOGY INTRODUCTION MAP
+
+Concept এবং terminology-কে আলাদা করে analyse করুন।
+
+প্রতিটি গুরুত্বপূর্ণ term-এর জন্য identify করুন:
+
+Concept Needed
+→ Concept Understood
+→ Term Introduced
+→ Term Defined
+→ Term Reused
+
+দেখুন:
+
+* term আগে এলে cognitive load বাড়বে কি না
+* term পরে এলে clarity কমবে কি না
+* একই term-এর meaning consistent থাকছে কি না
+* terminology concept-এর আগে না concept-এর পরে আসা উচিত
+
+Technical বা abstract terminology অকারণে আগে introduce করবেন না।
+
+11. RULE / PRINCIPLE / HYPOTHESIS STATUS
+
+যে statements reader-কে accept করতে হবে সেগুলোর epistemic status নির্ধারণ করুন।
+
+প্রতিটি গুরুত্বপূর্ণ statement classify করুন:
+
+* observable fact
+* observation
+* logical inference
+* operating principle
+* rule
+* assumption
+* proposition
+* hypothesis
+* philosophical claim
+* metaphysical claim
+
+কোনও hypothesis বা proposition-কে অকারণে established rule হিসেবে উপস্থাপন করবেন না।
+
+যদি কোনও statement-কে rule হিসেবে establish করতে হয়, দেখান:
+
+Rule
+→ Why it qualifies as a rule
+→ Supporting observation / reasoning / evidence / prior principle
+→ Possible reader objection
+→ Required explanation
+
+12. ARGUMENT MAP
+
+পুরো argument-এর logical structure তৈরি করুন।
+
+প্রতিটি major argument-এর dependency দেখান:
+
+Premise
+↓
+Reasoning
+↓
+Intermediate Conclusion
+↓
+Next Premise
+↓
+Further Reasoning
+↓
+Final Conclusion
+
+Identify করুন:
+
+* কোন argument কোন আগের thought-এর ওপর দাঁড়াচ্ছে
+* কোন premise কোথায় ব্যবহৃত হচ্ছে
+* কোন conclusion থেকে পরের premise তৈরি হচ্ছে
+* কোথায় assumption আছে
+* কোথায় logical jump আছে
+* কোথায় justification অসম্পূর্ণ
+
+13. MISSING THOUGHT / MISSING BRIDGE
+
+Content-এর argument সম্পূর্ণ করতে কোনও thought, premise, definition, explanation বা bridge missing আছে কি না তা identify করুন।
+
+আলাদা করে দেখুন:
+
+* missing premise
+* missing definition
+* missing causal link
+* missing conceptual bridge
+* missing example
+* missing explanation
+* missing objection handling
+
+প্রতিটি ক্ষেত্রে explain করুন:
+
+What is missing
+→ Where it is needed
+→ Why it is needed
+→ What later thought depends on it
+
+নতুন thought suggest করলে সেটি clearly “required structural bridge” হিসেবে identify করুন; author-এর মূল thesis-এর অংশ হিসেবে silently insert করবেন না।
+
+14. READER OBJECTION MAP
+
+প্রতিটি major conceptual leap বা important claim-এর ক্ষেত্রে সম্ভাব্য reader objection identify করুন।
+
+দেখুন:
+
+Claim
+→ Likely Reader Question / Objection
+→ Why the objection arises
+→ What explanation / evidence / example is needed
+
+বিশেষ গুরুত্ব দিন সেই জায়গাগুলোতে যেখানে audience-এর existing belief-এর সঙ্গে নতুন idea-এর tension তৈরি হচ্ছে।
+
+15. ARGUMENT SPINE
+
+পুরো content-এর argument-কে একটি continuous logical chain-এ লিখুন।
+
+উদাহরণ:
+
+Starting Point
+↓
+Problem
+↓
+Question
+↓
+Reframing
+↓
+Mechanism
+↓
+New Concept
+↓
+Deeper Relationship
+↓
+Implication
+↓
+Core Insight
+↓
+Conclusion
+
+Content-এর প্রকৃত argument অনুযায়ী sequence পরিবর্তন করুন।
+
+16. EXPLANATION DEPTH
+
+প্রতিটি major thought, concept এবং argument-এর জন্য explanation-এর প্রয়োজন নির্ধারণ করুন:
+
+কম
+মাঝারি
+বেশি
+খুব বেশি
+সর্বোচ্চ
+
+তার সঙ্গে explain করুন কেন।
+
+বিশেষ গুরুত্ব দিন:
+
+* new concept
+* unfamiliar relationship
+* non-obvious claim
+* philosophical / metaphysical proposition
+* major transition
+* logical bridge
+* central thesis-এর ওপর নির্ভরশীল claim
+* likely reader objection
+
+17. COGNITIVE PACING
+
+Content-এর কোথায় reader দ্রুত এগোতে পারবে এবং কোথায় তাকে slow down করানো প্রয়োজন তা identify করুন।
+
+দেখুন:
+
+Fast Passage
+→ Slow Down
+→ Explanation
+→ Example / Analogy
+→ Pause
+→ New Concept
+→ Resume
+
+বিশেষভাবে identify করুন:
+
+* conceptual overload-এর সম্ভাবনা
+* একসঙ্গে বেশি নতুন term আসছে কি না
+* একাধিক abstraction পরপর আসছে কি না
+* major paradigm shift-এর আগে preparation দরকার কি না
+
+18. COMPLETE THOUGHT UNITS
+
+Content-কে natural complete thought unit-এ ভাগ করুন।
+
+প্রতিটি unit-এর জন্য identify করুন:
+
+Thought Unit
+→ Core Idea
+→ Starting Point
+→ Development
+→ Completion Point
+→ What it establishes
+
+একটি thought সম্পূর্ণ হওয়ার আগেই পরবর্তী thought শুরু করবেন না।
+
+19. NATURAL NEXT THOUGHT
+
+প্রতিটি complete thought-এর পরে identify করুন:
+
+Current Thought
+→ Natural Question / Curiosity
+→ Next Thought
+
+প্রশ্ন করুন:
+
+“এই thought সম্পূর্ণ হওয়ার পরে একজন মনোযোগী পাঠকের মাথায় স্বাভাবিকভাবে কোন প্রশ্ন বা curiosity তৈরি হবে?”
+
+পরবর্তী thought সেই natural curiosity-এর উত্তর বা continuation কি না দেখুন।
+
+20. THOUGHT TRANSITIONS
+
+প্রতিটি major thought-এর মধ্যে bridge identify করুন।
+
+Format:
+
+Thought A
+→ Why Thought B naturally follows
+→ Bridge Question / Bridge Idea
+→ Thought B
+
+যেখানে transition abrupt, সেখানে missing bridge identify করুন।
+
+21. DELIVERY MECHANISM
+
+প্রতিটি major idea কীভাবে বোঝানো হবে তা identify করুন।
+
+প্রয়োজনে ব্যবহার করুন:
+
+* relatable observation
+* everyday incident
+* story
+* real-life situation
+* analogy
+* example
+* comparison
+* thought experiment
+* question
+* cause-effect chain
+* visualisation
+* step-by-step explanation
+
+প্রতিটি ক্ষেত্রে দেখান:
+
+Idea
+→ Delivery Device
+→ Why appropriate
+→ How to use it
+→ How to return from the example to the core idea
+
+22. ANALOGY ARCHITECTURE
+
+যেখানে analogy প্রয়োজন, শুধু analogy-এর subject নির্বাচন করবেন না।
+
+দেখান:
+
+Abstract Idea
+→ Familiar Experience
+→ Analogy
+→ What the analogy demonstrates
+→ Conceptual Mapping
+→ Return to Original Idea
+
+Analogy যেন শুধু decoration না হয়।
+
+যদি analogy reasoning bridge হিসেবে ব্যবহৃত হয়, সেটি স্পষ্ট করুন।
+
+একটি analogy একাধিক related concept naturally carry করতে পারলে continuity-এর জন্য সেটি ব্যবহার করুন। না হলে প্রয়োজন অনুযায়ী নতুন analogy ব্যবহার করুন।
+
+23. AUDIENCE JOURNEY
+
+পুরো content-এ audience-এর intellectual movement দেখান।
+
+উদাহরণ:
+
+আমি কী চাই?
+↓
+আমি কেন চাই?
+↓
+কিন্তু সমস্যা কোথায়?
+↓
+আমি যেভাবে ভাবি, সেটি কি সম্পূর্ণ?
+↓
+তাহলে আর কী দেখতে হবে?
+↓
+এর পিছনে কী mechanism আছে?
+↓
+আমি যে system-এর অংশ, সেটি কীভাবে কাজ করে?
+↓
+আমার কাজের সঙ্গে সেই system-এর relationship কী?
+↓
+এখন বিষয়টিকে নতুনভাবে কীভাবে দেখা যায়?
+
+এই journey যেন audience-এর existing mental model থেকে organically emerge করে।
+
+24. TURNING POINTS
+
+Content-এর সেই জায়গাগুলো identify করুন যেখানে reader-এর চিন্তার direction বদলাচ্ছে।
+
+প্রতিটি turning point-এর জন্য দেখান:
+
+Before
+→ Reader কী ভাবছিল
+
+Trigger
+→ কোন প্রশ্ন / ঘটনা / contradiction পরিবর্তন আনছে
+
+After
+→ কোন নতুন perspective তৈরি হচ্ছে
+
+বিশেষভাবে identify করুন central conceptual shift।
+
+25. PROBLEM → DEEPER PROBLEM → MECHANISM → IMPLICATION
+
+Content-এর problem structure identify করুন।
+
+Problem:
+পাঠক কী problem হিসেবে দেখছে?
+
+Deeper Problem:
+এর পিছনে আরও fundamental problem কী?
+
+Mechanism:
+কীভাবে সেই problem তৈরি বা বজায় থাকে?
+
+Implication:
+Mechanism বুঝলে কী নতুনভাবে দেখা সম্ভব?
+
+Solution / Alternative:
+যদি content-এর মধ্যে থাকে, সেই নতুন course of action বা way of thinking কী?
+
+যদি content-এর প্রকৃত structure এই model অনুসরণ না করে, content-এর প্রকৃত structure ব্যবহার করুন।
+
+26. AUTHORIAL CONTENT PROTECTION
+
+Analysis-এর সময় আলাদা করে নিশ্চিত করুন:
+
+* author-এর substantive thought বাদ যাচ্ছে না
+* unconventional idea conventional explanation-এ dilute হচ্ছে না
+* difficult idea অযথা oversimplify হচ্ছে না
+* author-এর intended relationship বদলে যাচ্ছে না
+* author's core proposition নিজের judgement দিয়ে silently replace করা হচ্ছে না
+* structure-এর প্রয়োজনে নতুন intellectual agenda তৈরি হচ্ছে না
+
+প্রয়োজনে আলাদা করুন:
+
+Author's Original Thought
+→ Structural Interpretation
+→ Suggested Structural Improvement
+
+এই তিনটি এক করে ফেলবেন না।
+
+27. FINAL INSIGHT
+
+শেষে identify করুন:
+
+Content-এর শেষে পাঠকের কী উপলব্ধি হওয়ার কথা?
+
+এটি শুধু conclusion-এর পুনরাবৃত্তি হবে না।
+
+দেখান:
+
+Surface Understanding
+→ Deeper Understanding
+→ Final Insight
+
+28. FINAL STRUCTURAL SUMMARY
+
+সবশেষে একটি সংক্ষিপ্ত কিন্তু substantive paragraph-এ explain করুন:
+
+* content-এর আসল intellectual movement কী
+* পাঠক কোথা থেকে কোথায় যাচ্ছে
+* audience-এর existing mental model কীভাবে entry point হিসেবে ব্যবহৃত হচ্ছে
+* কোন conceptual shift সবচেয়ে গুরুত্বপূর্ণ
+* কোন নতুন concept argument-এর turning point
+* কোন relationship সবচেয়ে গুরুত্বপূর্ণ
+* কোন argument সবচেয়ে বেশি explanation দাবি করে
+* কোথায় সবচেয়ে গুরুত্বপূর্ণ bridge প্রয়োজন
+* central thesis কোথায় গিয়ে naturally emerge করছে
+* content-এর deepest insight কী
+
+29. STRUCTURAL INTEGRATION MAP
+
+সবশেষে পুরো analysis-কে একটি integrated map হিসেবে দেখান:
+
+Content Inventory
+↓
+Core Thesis
+↓
+Reader Starting Point
+↓
+Prior Knowledge
+↓
+Concept Hierarchy
+↓
+Concept Relationships
+↓
+Concept Introduction
+↓
+Argument Structure
+↓
+Missing Bridges
+↓
+Reader Objections
+↓
+Explanation Depth
+↓
+Cognitive Pacing
+↓
+Complete Thought Units
+↓
+Natural Next Thoughts
+↓
+Transitions
+↓
+Delivery Mechanisms
+↓
+Audience Journey
+↓
+Turning Points
+↓
+Final Insight
+↓
+Final Structure
+
+এই map-এর উদ্দেশ্য কোনও নতুন structure চাপিয়ে দেওয়া নয়; বরং analysis-এর সব layer কীভাবে পরস্পরের সঙ্গে connected তা দৃশ্যমান করা।
+
+30. GOVERNING PRINCIPLE
+
+সবসময় মনে রাখুন:
+
+Structure is in service of the content, not content in service of the structure.
+
+অতএব:
+
+* structure পূরণ করার জন্য thought invent করবেন না
+* একই কথা অপ্রয়োজনীয়ভাবে repeat করবেন না
+* audience-এর natural thought progression ভাঙবেন না
+* concept প্রয়োজনের আগে introduce করবেন না
+* necessary concept বাদ দেবেন না
+* logical bridge অকারণে skip করবেন না
+* philosophical / metaphysical proposition-কে evidence বা reasoning ছাড়া established fact হিসেবে present করবেন না
+* author-এর substantive content নিজের judgement দিয়ে পরিবর্তন করবেন না
+* content-এর ambiguity থাকলে সেটিকে silently resolve করবেন না; ambiguity identify করুন
+* content-এর ভিতরের tension বা contradiction থাকলে সেটিকে মুছে ফেলবেন না; identify করুন
+* structure-এর কাজ হবে content-এর logic, hierarchy, dependency, relationship, sequence এবং reader journey দৃশ্যমান করা
+
+OUTPUT STYLE
+
+Output যেন একটি rigorous কিন্তু readable editorial-intellectual analysis-এর মতো হয়।
+
+শুধু bullet-point extraction করবেন না।
+
+যেখানে প্রয়োজন সেখানে:
+
+* explanation
+* distinction
+* relationship
+* dependency
+* hierarchy
+* transition
+* logical chain
+* reader question
+* conceptual bridge
+
+দেখান।
+
+একইসঙ্গে unnecessary repetition এবং artificial complexity এড়িয়ে চলুন।
+
+প্রতিটি section-এর মধ্যে continuity রাখুন যাতে পুরো output পড়লে মনে হয় একটি thought থেকে পরের thought naturally unfold হচ্ছে।
+
+যেখানে content-এর কোনও অংশ নিশ্চিতভাবে প্রতিষ্ঠিত নয়, সেখানে তার status স্পষ্ট করুন; নিজের পক্ষ থেকে certainty তৈরি করবেন না।</div>
+            <div class="action-bar">
+                <button class="btn-primary" onclick="copyText('promptText')">Copy Prompt Only</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard successfully!</div>
+
+    <footer>
+        Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.
+    </footer>
+
+    <script>
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Prompt copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
