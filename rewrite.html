@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewrite</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent: #0ea5e9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Prompt Display Box */
+        .prompt-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-height: 550px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(1rem); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Rewrite</h1>
+            <p>Editorial Architecture & Argument Unfolding System</p>
+        </header>
+
+        <!-- PROMPT SECTION -->
+        <div class="card">
+            <div class="section-title">Prompt</div>
+
+            <div class="prompt-box" id="promptText">আমি এই কনটেন্টটাতে সন্তুষ্ট নই। আমি চেয়েছি - একটার পর একটা, ধাপে ধাপে যুক্তি বিচার করে ইস্যু ও what to do দেখাতে চাই - এভাবে সরল একটা উপদেশ দেওয়া পছন্দ করছি না। 
+
+আমার argument-কে unfold করার বদলে conclusion-কে reader-এর সামনে পৌঁছে দেওয়া আমার কাম্য নয়।
+
+আমি কোনও মতেই চাই না, এটা শেষ পর্যন্ত উপদেশমূলক framework হয়ে যায়।
+
+আমার বৈশিষ্ট্য ও  আসল শক্তি হচ্ছে একটা প্রশ্ন থেকে পরের প্রশ্ন অনিবার্য করে তোলা।
+
+আমার কাঙ্ক্ষিত পদ্ধতি হ'ল - প্রতিটি ধাপে পাঠককে এমন একটি অবস্থায় নিয়ে যেতে হবে যেখানে আগের ব্যাখ্যাটি আর পুরোপুরি যথেষ্ট নয়।
+
+আমি আসলে চাই:
+
+Reader যেন chapter-এর শেষে এসে নিজেই বলতে পারেন—“আচ্ছা, তাহলে ব্যাপারটা এখানে!”
+
+এটাই One-to-one intellectual conversation-এর আরও গভীর অর্থ।
+
+তাই, 
+
+কনটেন্টটা rewrite করো - শুধু tone-এর জন্য rewrite করা নয়, argument-unfolding architecture-টাই নতুন করে ঠিক করতে হবে—তবে Dumb Doc-এর content বাদ দিয়ে নয়।
+
+তাই প্রতিটি assertion-এর আগে তার প্রয়োজনীয় reasoning তৈরি করো, এবং প্রতিটি নতুন concept তখনই আনবে যখন আগের ধাপটি তাকে logically প্রয়োজনীয় করে তুলবে।</div>
+            <div class="action-bar">
+                <button class="btn-primary" onclick="copyText('promptText')">Copy Prompt Only</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard successfully!</div>
+
+    <footer>
+        Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.
+    </footer>
+
+    <script>
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Prompt copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
