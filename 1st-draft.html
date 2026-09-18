@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কনটেন্ট জেনারেশন টেমপ্লেট</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #2b6cb0;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --note-bg: #edf2f7;
+            --success-color: #2f855a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation Sections */
+        .nav-section {
+            margin-bottom: 15px;
+            background: var(--note-bg);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            padding: 8px 14px;
+            font-size: 0.88rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .nav-btn:hover {
+            background-color: #e2e8f0;
+        }
+
+        .nav-btn.active {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
+        }
+
+        /* Content Panels */
+        .panel {
+            display: none;
+            margin-bottom: 20px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        /* Input Styles */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.93rem;
+            resize: vertical;
+            background-color: #fafafa;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background-color: #ffffff;
+        }
+
+        .clear-btn {
+            background-color: #e53e3e;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .clear-btn:hover {
+            background-color: #c53030;
+        }
+
+        .copy-btn {
+            background-color: #edf2f7;
+            border: 1px solid #cbd5e0;
+            color: #4a5568;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success-color) !important;
+            color: #ffffff !important;
+            border-color: var(--success-color) !important;
+        }
+
+        .prompt-text {
+            white-space: pre-wrap;
+            font-size: 0.93rem;
+            color: #334155;
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.82rem;
+            color: #718096;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 25px; }
+            .container { padding: 30px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>কনটেন্ট জেনারেশন টেমপ্লেট</h1>
+        </header>
+
+        <!-- Navigation Section 1: Input Fields -->
+        <div class="nav-section">
+            <div class="nav-title">ইনপুট ফিল্ড (Input Fields)</div>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="switchTab('panel-dumb-doc', this)">Dumb Doc</button>
+            </div>
+        </div>
+
+        <!-- Navigation Section 2: Prompts -->
+        <div class="nav-section">
+            <div class="nav-title">প্রম্পটসমূহ (Prompts)</div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="switchTab('panel-prompt', this)">মূল প্রম্পট</button>
+            </div>
+        </div>
+
+        <!-- Panel 1: Dumb Doc (Input Field) -->
+        <div id="panel-dumb-doc" class="panel active">
+            <div class="panel-header">
+                <h2>Dumb Doc Input</h2>
+            </div>
+            <button class="clear-btn" onclick="clearInput()">Clear Input</button>
+            <div class="input-group">
+                <label class="input-label" for="dumbDocInput">Dumb Doc:</label>
+                <textarea id="dumbDocInput" placeholder="এখানে আপনার Dumb Doc বা কনটেন্টের মূল তথ্য লিখুন..." oninput="updateDynamicText()">কনটেন্টের মূল বিষয় বা কনটেক্সট এখানে লিখুন...</textarea>
+            </div>
+        </div>
+
+        <!-- Panel 2: Prompt -->
+        <div id="panel-prompt" class="panel">
+            <div class="panel-header">
+                <h2>মূল প্রম্পট</h2>
+                <button class="copy-btn" onclick="copyPromptText('prompt-text-content', this)">কপি টেক্সট</button>
+            </div>
+            <div class="prompt-text" id="prompt-text-content">INPUT
+
+Dumb Doc:
+<span class="dynamic-dumb-doc">কনটেন্টের মূল বিষয় বা কনটেক্সট এখানে লিখুন...</span>
+
+অডিয়েন্স
+
+এই অডিয়েন্স মূলত self-centric দৃষ্টিভঙ্গিতে অভ্যস্ত। তারা সাধারণত নিজের লাভ, প্রয়োজন, নিরাপত্তা, সুবিধা ও সাফল্যকে কেন্দ্র করে বিষয়গুলোকে বিচার করে। পারস্পরিক সহযোগিতার চেয়ে competition-কে প্রয়োজনীয় ও স্বাভাবিক বলে মনে করার প্রবণতা তাদের মধ্যে রয়েছে।
+
+তারা জীবনের প্রয়োজনগুলোকে ক্রমাগত বাড়ানো এবং সেই বাড়তে থাকা প্রয়োজন পূরণের জন্য আরও বেশি অর্জন, আয়, সুবিধা ও সাফল্যের পিছনে ছুটে চলাকে যুক্তিসঙ্গত ও প্রয়োজনীয় বলে মনে করে।
+
+তারা সাধারণত surface-level truth, গভীর insight, underlying mechanism, গভীর analysis এবং গভীর thought-এর দিকে স্বতঃস্ফূর্তভাবে যেতে চায় না। পরিচিত ব্যাখ্যা ও প্রচলিত চিন্তার কাঠামোর মধ্যেই বিষয়গুলোকে বুঝে নেওয়া তাদের কাছে বেশি স্বাভাবিক।
+
+কনটেন্টের উদ্দেশ্য
+
+এই অডিয়েন্সের মধ্যে ধীরে ধীরে deep analysis এবং deep thought-এর অভ্যাস তৈরি করা।
+
+তাদের বর্তমান বিশ্বাস, প্রয়োজন ও চিন্তার জগতকে সরাসরি আক্রমণ না করে, সেই পরিচিত জগতের ভিতর থেকেই তাদের এমনভাবে চিন্তার গভীরে নিয়ে যেতে হবে যাতে তারা নিজেরাই surface-level explanation-এর সীমাবদ্ধতা দেখতে শুরু করে এবং deeper analysis-এর প্রয়োজন অনুভব করে।
+
+কনটেন্টের উদ্দেশ্য অর্জনের পদ্ধতি
+
+১. Title
+
+Title এমন ভাষা, বিষয়, প্রশ্ন, প্রয়োজন, আকাঙ্ক্ষা বা সমস্যা ব্যবহার করবে যার সঙ্গে অডিয়েন্স স্বাভাবিকভাবে relate করে এবং যা তাদের বর্তমান প্রয়োজন ও বিশ্বাসের কাঠামোর সঙ্গে সামঞ্জস্যপূর্ণ।
+
+Title-এ সরাসরি “deep thinking”, “deep analysis”, “truth”, “philosophy” বা অনুরূপ abstract ধারণাকে কেন্দ্রীয় hook হিসেবে ব্যবহার করা যাবে না, যদি না সেটি অডিয়েন্সের কাছে স্বাভাবিকভাবে আকর্ষণীয় হয়।
+
+২. Body
+
+Body-র শুরুতে deep thought, deep thesis বা abstract philosophical discussion দিয়ে প্রবেশ করা যাবে না।
+
+প্রথমে অডিয়েন্সের পরিচিত জীবন, অভ্যাস, প্রয়োজন, বিশ্বাস বা দৈনন্দিন অভিজ্ঞতার কোনও একটি বিষয়কে story, ঘটনা, পরিস্থিতি বা relatable observation-এর মাধ্যমে উপস্থাপন করতে হবে।
+
+তারপর সেই পরিচিত বিষয়টিকে ধীরে ধীরে analyse করতে হবে এবং দেখাতে হবে:
+
+ক) প্রচলিতভাবে বিষয়টিকে যেভাবে দেখা হয়, সেখানে কী কী সীমাবদ্ধতা রয়েছে
+
+খ) কোথায় assumption, ভুল বোঝাবুঝি, অসম্পূর্ণতা বা logical gap রয়েছে
+
+গ) বিষয়টির পিছনে আরও কী deeper mechanism বা relationship কাজ করছে
+
+ঘ) একই বিষয়কে অন্য দৃষ্টিকোণ থেকে দেখলে কী নতুনভাবে বোঝা যায়
+
+শেষে alternative way of thinking, alternative interpretation বা alternative course of action দেখাতে হবে।
+
+অর্থাৎ content-এর চিন্তার progression হবে:
+
+পরিচিত বিষয় → পরিচিত বিশ্বাস → প্রশ্ন/অস্বস্তি → বিশ্লেষণ → প্রচলিত ধারণার সীমাবদ্ধতা → deeper insight → alternative perspective → নতুনভাবে দেখার অভ্যাস
+
+৩. Analogy
+
+Analogy এমন বিষয় থেকে নিতে হবে যা অডিয়েন্সের দৈনন্দিন জীবনের সঙ্গে সরাসরি সম্পর্কিত এবং তাদের চোখে অনায়াসে পড়ে।
+
+বিশেষভাবে ব্যবহার করতে হবে:
+
+ক) তাদের নিজেদের জীবনে নিয়মিত ঘটে এমন ঘটনা
+
+খ) তাদের আশেপাশে নিয়মিত ঘটে এমন ঘটনা
+
+গ) তাদের পরিচিত সামাজিক, পারিবারিক, কর্মক্ষেত্র বা দৈনন্দিন পরিস্থিতি
+
+ঘ) এমন সাধারণ ঘটনা যেগুলো তারা সাধারণত অন্যভাবে analyse করার কথা ভাবে না
+
+Analogy-র উদ্দেশ্য হবে কোনও abstract বা গভীর ধারণাকে প্রথমেই abstract ভাষায় ব্যাখ্যা না করে, একটি পরিচিত ও সহজে দেখা যায় এমন ঘটনার মাধ্যমে সেই ধারণাটিকে উপলব্ধিযোগ্য করে তোলা।
+
+মূল নীতি
+
+অডিয়েন্সকে তাদের বর্তমান চিন্তার জগত থেকে বাইরে ঠেলে দেওয়া যাবে না। বরং তাদের বর্তমান প্রয়োজন, বিশ্বাস ও অভিজ্ঞতাকে entry point হিসেবে ব্যবহার করে ধাপে ধাপে তাদের চিন্তার গভীরে নিয়ে যেতে হবে।
+
+কনটেন্টের গভীরতা অডিয়েন্সের সামনে ঘোষণা করা হবে না; কনটেন্টের চিন্তার progression-এর মধ্য দিয়েই সেই গভীরতা তৈরি হবে।
+
+মূল কৌশল
+
+উপরের Dumb Doc এবং Audience-এর ভিত্তিতে একটি সম্পূর্ণ কনটেন্ট তৈরি করুন।
+
+অডিয়েন্সের বর্তমান প্রয়োজন, বিশ্বাস, অভ্যাস ও দৈনন্দিন অভিজ্ঞতাকে entry point হিসেবে ব্যবহার করুন। সরাসরি deep thinking, philosophy বা abstract truth দিয়ে শুরু করবেন না।
+
+পরিচিত একটি বিষয় থেকে শুরু করে ধাপে ধাপে অডিয়েন্সকে analysis, deeper insight এবং alternative perspective-এর দিকে নিয়ে যান।
+
+প্রতিটি section যেন আগের section-এর স্বাভাবিক ফল হিসেবে আসে। কোনও section হঠাৎ শুরু করবেন না। প্রতিটি section-এর মধ্যে এমন সেতুবাক্য ব্যবহার করুন যা চিন্তার flow বজায় রাখে।
+
+কনটেন্টের overall progression হবে:
+
+পরিচিত বিষয় → Hook → Story → Analysis → Deeper Insight → Alternative Perspective → Conclusion
+
+Title
+
+এমন একটি Title তৈরি করুন যা Audience-এর পরিচিত প্রয়োজন, আকাঙ্ক্ষা, সমস্যা, ভয়, বিশ্বাস বা দৈনন্দিন অভিজ্ঞতার সঙ্গে Topic-কে যুক্ত করে।
+
+Title-এর মাধ্যমে deep thinking বা গভীর analysis-এর কথা সরাসরি প্রচার করবেন না। Title এমন হতে হবে যাতে Audience প্রথম দেখাতেই মনে করে, “এটা আমার জীবনেরই একটা বিষয়।”
+
+Title curiosity তৈরি করবে, কিন্তু clickbait হবে না।
+
+Hook
+
+প্রথম কয়েকটি বাক্যে Audience-এর পরিচিত কোনও পরিস্থিতি, অভ্যাস, বিশ্বাস বা সমস্যাকে এমনভাবে তুলে ধরুন যাতে তারা নিজেদের সঙ্গে তার মিল খুঁজে পায় এবং Topic-এর সঙ্গে স্বাভাবিকভাবে যুক্ত হয়।
+
+Hook-এর উদ্দেশ্য:
+
+Audience-এর attention ধরা
+তাদের পরিচিত বাস্তবতার সঙ্গে connect করা
+তাদের মনে একটি স্বাভাবিক প্রশ্ন বা curiosity তৈরি করা
+
+শুরুতেই কোনও abstract theory, philosophical statement বা deep thesis দেবেন না।
+
+Hook → Story সেতুবাক্য
+
+Hook-এ তৈরি হওয়া curiosity বা প্রশ্নকে ব্যবহার করে Story-তে প্রবেশ করুন।
+
+সেতুবাক্য এমন হবে যাতে মনে হয়, “এই কথাটার বাস্তব উদাহরণ দেখা যাক” অথবা “এমন একটি ঘটনা প্রায়ই আমাদের সামনে ঘটে।”
+
+সেতুবাক্য কৃত্রিমভাবে “এবার একটি গল্প বলি” ধরনের ঘোষণা করবে না।
+
+Story
+
+Audience-এর পরিচিত জীবন বা আশেপাশে ঘটে এমন একটি ঘটনা, পরিস্থিতি বা ছোট গল্প ব্যবহার করুন।
+
+Story এমন হতে হবে যাতে Audience প্রথমে এটিকে সাধারণ ও পরিচিত একটি ঘটনা হিসেবেই গ্রহণ করে।
+
+Story-এর মধ্যে অপ্রয়োজনীয় নাটকীয়তা যোগ করবেন না। বাস্তব জীবনের স্বাভাবিকতা বজায় রাখুন।
+
+Story-র মাধ্যমে Topic-এর সঙ্গে সম্পর্কিত Audience-এর কোনও একটি পরিচিত belief বা behavioural pattern দৃশ্যমান করে তুলুন।
+
+Story → Analysis সেতুবাক্য
+
+Story শেষ হওয়ার পরে এমন একটি সেতুবাক্য ব্যবহার করুন যা গল্পের ঘটনাটিকে স্বাভাবিকভাবে প্রশ্নের সামনে দাঁড় করায়।
+
+সেতুবাক্যের কাজ হবে:
+
+ঘটনাটি আসলে কেন ঘটল?
+আমরা এটিকে সাধারণত যেভাবে দেখি, সেটিই কি সম্পূর্ণ ব্যাখ্যা?
+এখানে আমরা এমন কী ধরে নিচ্ছি যা হয়তো ঠিক নয়?
+
+এই ধরনের চিন্তার দরজা খুলে দেওয়া।
+
+সরাসরি “এবার বিশ্লেষণ করা যাক” বলবেন না।
+
+Analysis
+
+Story-তে দেখা ঘটনা বা বিশ্বাসটিকে Topic-এর প্রেক্ষিতে analyse করুন।
+
+প্রথমে দেখান Audience সাধারণত বিষয়টিকে কীভাবে দেখে।
+
+তারপর ধীরে ধীরে পরীক্ষা করুন:
+
+তাদের ধারণাটি কতটা সম্পূর্ণ
+কোন assumption-এর উপর সেটি দাঁড়িয়ে আছে
+কোথায় logical gap বা ভুল interpretation রয়েছে
+কোন গুরুত্বপূর্ণ factor তারা সাধারণত দেখতে পায় না
+ঘটনার পিছনে অন্য কোনও mechanism কাজ করছে কি না
+
+Analysis যেন lecture-এর মতো না হয়। Story থেকে স্বাভাবিকভাবে analysis-এ প্রবেশ করুন।
+
+Analysis → Deeper Insight সেতুবাক্য
+
+Analysis-এর শেষে এমন একটি সেতুবাক্য ব্যবহার করুন যা দেখায় যে সমস্যাটি শুধু ওই নির্দিষ্ট ঘটনা বা বিশ্বাসের মধ্যে সীমাবদ্ধ নয়।
+
+সেতুবাক্যটি Audience-কে একটি বৃহত্তর pattern, underlying mechanism বা আরও গভীর প্রশ্নের দিকে নিয়ে যাবে।
+
+Analysis থেকে এমন একটি জায়গায় পৌঁছান যেখানে Audience স্বাভাবিকভাবেই বুঝতে পারে যে বিষয়টির আরও একটি স্তর রয়েছে।
+
+Deeper Insight
+
+Analysis-এর ভিত্তিতে এমন একটি deeper insight প্রকাশ করুন যা Audience সাধারণত প্রথম দেখায় দেখতে পায় না।
+
+এখানে surface-level ঘটনা থেকে underlying pattern, relationship, mechanism বা principle-এর দিকে যেতে হবে।
+
+Deeper Insight-এর উদ্দেশ্য Audience-কে শুধু একটি নতুন তথ্য দেওয়া নয়; বরং একই ধরনের ঘটনা ভবিষ্যতে তারা কীভাবে দেখতে পারে, সেই দেখার পদ্ধতিতে পরিবর্তন আনা।
+
+তবে insight-কে অপ্রয়োজনীয়ভাবে জটিল বা abstract করবেন না। যতটা সম্ভব পরিচিত উদাহরণ এবং সহজ ভাষার মাধ্যমে গভীর বিষয়টি পরিষ্কার করুন।
+
+Deeper Insight → Alternative Perspective সেতুবাক্য
+
+Deeper Insight-এর পরে এমন একটি সেতুবাক্য ব্যবহার করুন যা Audience-কে স্বাভাবিকভাবে প্রশ্ন করতে সাহায্য করে:
+
+“যদি বিষয়টা আসলে এমন হয়, তাহলে অন্যভাবে দেখলে কী হয়?”
+
+Insight থেকে নতুন perspective-এ যাওয়ার প্রয়োজনটি আগে তৈরি করুন, তারপর Alternative Perspective উপস্থাপন করুন।
+
+Alternative Perspective
+
+এখন Topic-কে অন্য একটি দৃষ্টিকোণ থেকে দেখান।
+
+Alternative Perspective প্রচলিত ধারণাকে শুধু reject করবে না। বরং দেখাবে:
+
+অন্যভাবে দেখলে কী বোঝা যায়
+কোন নতুন possibility তৈরি হয়
+কোন সিদ্ধান্ত বা আচরণ পরিবর্তিত হতে পারে
+কেন এই নতুন perspective বাস্তব জীবনে প্রাসঙ্গিক
+
+Audience-কে কী ভাবতে হবে তা নির্দেশ না করে, এমনভাবে perspective উপস্থাপন করুন যাতে তারা নিজেরাই নতুনভাবে বিষয়টি দেখার সুযোগ পায়।
+
+Alternative Perspective → Conclusion সেতুবাক্য
+
+Alternative Perspective-এর পরে এমন একটি সেতুবাক্য ব্যবহার করুন যা পুরো আলোচনাটিকে আবার Audience-এর নিজের জীবনের সঙ্গে যুক্ত করে।
+
+নতুন perspective-কে বাস্তব জীবনের অর্থের সঙ্গে যুক্ত করুন এবং শুরুতে উত্থাপিত বিষয়টিকে নতুন আলোয় ফিরিয়ে আনুন।
+
+হঠাৎ করে “সবশেষে বলা যায়” বা “উপসংহারে” ধরনের formal transition ব্যবহার করবেন না, যদি না সেটি কনটেন্টের tone-এর সঙ্গে স্বাভাবিকভাবে মেলে।
+
+Conclusion
+
+Conclusion-এ পুরো কনটেন্টের মূল চিন্তাটিকে সংক্ষিপ্তভাবে consolidate করুন।
+
+শুধু Story-র summary দেবেন না।
+
+বরং শুরুতে যে পরিচিত বিষয় দিয়ে যাত্রা শুরু হয়েছিল, সেটিকে নতুন perspective-এর আলোকে আবার দেখান।
+
+শেষে এমন একটি thought, question বা observation রাখুন যা Audience-কে কনটেন্ট শেষ হওয়ার পরও Topic নিয়ে ভাবতে সাহায্য করে।
+
+Conclusion-এর উদ্দেশ্য হবে কোনও নির্দিষ্ট মত চাপিয়ে দেওয়া নয়; বরং Audience-এর নিজের চিন্তার পরিধি সামান্য প্রসারিত করে দেওয়া।
+
+সেতুবাক্যের মূল নিয়ম
+
+প্রতিটি সেতুবাক্য যেন শুধুমাত্র section পরিবর্তনের সংকেত না দেয়; বরং আগের চিন্তা থেকে পরের চিন্তা কেন স্বাভাবিকভাবে আসছে, সেটি তৈরি করে।
+
+সেতুবাক্য হবে:
+
+স্বাভাবিক
+সংক্ষিপ্ত
+প্রাসঙ্গিক
+চিন্তার flow-নির্ভর
+অপ্রচারমূলক
+
+একই ধরনের transition বারবার ব্যবহার করবেন না।
+
+“এবার আসি...”
+“এখন দেখা যাক...”
+“এরপর আমরা দেখব...”
+“সবশেষে...”
+
+এই ধরনের mechanical transition যতটা সম্ভব এড়িয়ে চলুন।
+
+Analogy ব্যবহারের নিয়ম
+
+যদি analogy প্রয়োজন হয়, এমন analogy ব্যবহার করুন যা Audience-এর দৈনন্দিন জীবনে স্বাভাবিকভাবে দেখা যায়।
+
+Analogy-এর source হতে পারে:
+
+দৈনন্দিন জীবন
+পরিবার
+কাজের জায়গা
+ব্যবসা
+টাকা-পয়সা
+কেনাকাটা
+সম্পর্ক
+সামাজিক আচরণ
+রাস্তাঘাট বা আশেপাশের সাধারণ ঘটনা
+
+Analogy যেন মূল Topic-কে replace না করে। এর কাজ হবে অদৃশ্য বা abstract relationship-কে একটি পরিচিত ঘটনার মাধ্যমে দৃশ্যমান করা।
+
+ভাষা ও Tone
+
+ভাষা হবে সহজ, স্বাভাবিক, conversational এবং relatable।
+
+অপ্রয়োজনীয় jargon ব্যবহার করবেন না।
+
+Audience-কে ছোট, অজ্ঞ বা ভুল মানুষ হিসেবে উপস্থাপন করবেন না।
+
+তাদের বিশ্বাসের সমালোচনা করলে ব্যক্তিকে নয়, ধারণা বা reasoning-কে analyse করুন।
+
+কনটেন্ট যেন বিজ্ঞাপন, lecture বা moral preaching-এর মতো না শোনায়।
+
+Final Quality Check
+
+কনটেন্ট সম্পূর্ণ করার পর যাচাই করুন:
+
+Title কি Audience-এর পরিচিত জগত থেকে এসেছে?
+
+Hook কি Topic-এর সঙ্গে স্বাভাবিকভাবে connect করেছে?
+
+Hook কি curiosity তৈরি করেছে?
+
+Hook থেকে Story-তে transition কি natural?
+
+Story কি relatable?
+
+Story থেকে Analysis-এ যাওয়ার প্রয়োজন কি তৈরি হয়েছে?
+
+Analysis কি Story থেকেই organically এসেছে?
+
+Analysis থেকে Deeper Insight-এ যাওয়ার logical bridge কি আছে?
+
+Deeper Insight কি সত্যিই নতুনভাবে দেখার সুযোগ তৈরি করেছে?
+
+Deeper Insight থেকে Alternative Perspective-এ যাওয়ার প্রয়োজন কি তৈরি করেছে?
+
+Alternative Perspective কি বাস্তব ও বোধগম্য?
+
+Alternative Perspective থেকে Conclusion-এ transition কি natural?
+
+Conclusion কি শুধু summary না হয়ে চিন্তার যাত্রাটিকে সম্পূর্ণ করেছে?
+
+পুরো কনটেন্টে কি পরিচিত বিষয় থেকে গভীর চিন্তার দিকে একটি স্বাভাবিক progression রয়েছে?
+
+কনটেন্ট কি Audience-কে সরাসরি “deep thinking” শেখানোর চেষ্টা না করেও গভীরভাবে ভাবার সুযোগ তৈরি করছে?
+
+সবচেয়ে গুরুত্বপূর্ণভাবে যাচাই করুন:
+
+Audience কি শুরুতে যে জায়গায় ছিল, শেষ পর্যন্ত সেখানে একই জায়গায় রয়ে গেল—নাকি কোনও নির্দিষ্ট মত চাপিয়ে না দিয়েও তারা Topic-টিকে একটু গভীরভাবে দেখার একটি নতুন উপায় পেল?</div>
+        </div>
+
+        <footer>
+            Copyright &copy; <script>document.write(new Date().getFullYear())</script> Siva Prasad Mukherjee. All Rights Reserved.
+        </footer>
+    </div>
+
+    <script>
+        // Tab Switching Logic
+        function switchTab(panelId, btnElement) {
+            const panels = document.querySelectorAll('.panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(panelId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        // Clear Input Field
+        function clearInput() {
+            document.getElementById('dumbDocInput').value = '';
+            updateDynamicText();
+        }
+
+        // Dynamic Input Binding across prompts
+        function updateDynamicText() {
+            const inputValue = document.getElementById('dumbDocInput').value;
+            const displayValue = inputValue.trim() === '' ? '[Dumb Doc]' : inputValue;
+            
+            const dynamicElements = document.querySelectorAll('.dynamic-dumb-doc');
+            dynamicElements.forEach(el => {
+                el.innerText = displayValue;
+            });
+        }
+
+        // Copy Text Function with Feedback
+        function copyPromptText(elementId, button) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.innerText;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = button.innerText;
+                button.innerText = 'কপি হয়েছে!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('কপি করতে ব্যর্থ হয়েছে: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
